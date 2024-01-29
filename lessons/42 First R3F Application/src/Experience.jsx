@@ -2,6 +2,7 @@ import { extend, useFrame, useThree } from "@react-three/fiber";
 import React, { useRef } from "react";
 import { Camera } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import CustomObject from "./CustomObject";
 
 //Extend will convert 3js class into declarative version and make it available for jsx
 extend({ OrbitControls })
@@ -41,6 +42,7 @@ const Experience = () => {
         <planeGeometry />
         <meshStandardMaterial color="yellowgreen" />
       </mesh>
+      <CustomObject />
     </>
   );
 };
