@@ -1,14 +1,24 @@
-import React from "react";
+import { useFrame } from "@react-three/fiber";
+import React, { useRef } from "react";
 
 const Experience = () => {
+
+  const cubeRef = useRef()
+
+  //useFrame hook will be called on each frame ==> to animate etc...
+  useFrame((state, delta) => {
+    cubeRef.current.rotation.y += delta
+  })
+
   return (
+
     <>
       <mesh position-x={-2} scale={0.8}>
         <sphereGeometry />
         <meshBasicMaterial color="orange" wireframe />
       </mesh>
 
-      <mesh rotation-y={Math.PI * 0.25} position-x={2} scale={1.5}>
+      <mesh ref={cubeRef} rotation-y={Math.PI * 0.25} position-x={2} scale={1.5}>
         <boxGeometry scale={1.5} />
         <meshBasicMaterial color="mediumpurple" wireframe={false} />
       </mesh>
