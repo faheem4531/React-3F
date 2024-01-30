@@ -1,4 +1,4 @@
-import { Html, OrbitControls, PivotControls, TransformControls } from "@react-three/drei";
+import { Float, Html, OrbitControls, PivotControls, Text, TransformControls } from "@react-three/drei";
 import { useRef } from "react";
 
 export default function Experience() {
@@ -46,6 +46,21 @@ export default function Experience() {
             <planeGeometry />
             <meshStandardMaterial color="greenyellow" />
         </mesh>
+
+        <Float
+            speed={2}
+            floatIntensity={2}
+        >
+            <Text
+                font="./bangers-v20-latin-regular.woff"
+                color="salmon"
+                position-y={2}
+                maxWidth={2}
+                textAlign="center"
+            >
+                Hello R3F
+            </Text>
+        </Float>
 
     </>
 }
