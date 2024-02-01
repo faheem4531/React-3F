@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { AccumulativeShadows, BakeShadows, ContactShadows, OrbitControls, RandomizedLight, Sky, SoftShadows, useHelper } from '@react-three/drei'
+import { AccumulativeShadows, BakeShadows, ContactShadows, Environment, OrbitControls, RandomizedLight, Sky, SoftShadows, useHelper } from '@react-three/drei'
 import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
@@ -31,7 +31,25 @@ export default function Experience() {
         sunPosition: { value: [1, 2, 3] }
     })
 
+    const { envMapIntensity } = useControls('environment map', {
+        envMapIntensity: { value: 3.5, min: 0, max: 12 }
+    })
+
     return <>
+        <Environment
+            background
+            files={[
+                './environmentMaps/2/px.jpg',
+                './environmentMaps/2/nx.jpg',
+                './environmentMaps/2/py.jpg',
+                './environmentMaps/2/ny.jpg',
+                './environmentMaps/2/pz.jpg',
+                './environmentMaps/2/nz.jpg',
+            ]}
+        />
+
+
+
         {/* <SoftShadows   // to make shadow edges soft and blury
         // frustum={3.75}
         // size={0.005}
@@ -81,7 +99,7 @@ export default function Experience() {
         />
 
 
-        <directionalLight
+        {/* <directionalLight
             ref={directionalLight}
             position={sunPosition}
             intensity={1.5}
@@ -93,24 +111,24 @@ export default function Experience() {
             shadow-camera-right={5}
             shadow-camera-bottom={-5}
             shadow-camera-left={-5}
-        />
-        <ambientLight intensity={0.5} />
+        /> */}
+        {/* <ambientLight intensity={0.5} /> */}
 
-        <Sky sunPosition={sunPosition} />
+        {/* <Sky sunPosition={sunPosition} /> */}
 
         <mesh castShadow position-x={- 2}>
             <sphereGeometry />
-            <meshStandardMaterial color="orange" />
+            <meshStandardMaterial color="orange" envMapIntensity={envMapIntensity} />
         </mesh>
 
-        <mesh castShadow ref={cube} position-x={2} scale={1.5}>
+        <mesh castShadow ref={cube} position-x={2} scale={1.5} >
             <boxGeometry />
-            <meshStandardMaterial color="mediumpurple" />
+            <meshStandardMaterial color="mediumpurple" envMapIntensity={envMapIntensity} />
         </mesh>
 
         <mesh position-y={- 1} rotation-x={- Math.PI * 0.5} scale={10}>
             <planeGeometry />
-            <meshStandardMaterial color="greenyellow" />
+            <meshStandardMaterial color="greenyellow" envMapIntensity={envMapIntensity} />
         </mesh>
 
     </>
