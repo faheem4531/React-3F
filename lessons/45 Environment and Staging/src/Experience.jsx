@@ -1,5 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { AccumulativeShadows, BakeShadows, OrbitControls, RandomizedLight, SoftShadows, useHelper } from '@react-three/drei'
+import { AccumulativeShadows, BakeShadows, ContactShadows, OrbitControls, RandomizedLight, SoftShadows, useHelper } from '@react-three/drei'
 import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
@@ -37,7 +37,7 @@ export default function Experience() {
         <OrbitControls makeDefault />
 
         {/* for only to cast on plans and not good for animated objects  */}
-        <AccumulativeShadows
+        {/* <AccumulativeShadows
             position={[0, -0.99, 0]}
             scale={10}
             color='#316d39'
@@ -54,7 +54,15 @@ export default function Experience() {
                 position={[1, 2, 3]}
                 bias={0.001}
             />
-        </AccumulativeShadows>
+        </AccumulativeShadows> */}
+
+        {/* contact Shadows work without a light and on a plane  */}
+        <ContactShadows
+            position={[0, -0.99, 0]}
+            scale={10}
+            resolution={512}
+            far={5} />
+
 
         <directionalLight
             ref={directionalLight}
