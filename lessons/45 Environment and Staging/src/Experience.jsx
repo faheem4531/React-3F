@@ -3,6 +3,7 @@ import { AccumulativeShadows, BakeShadows, ContactShadows, OrbitControls, Random
 import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
+import { useControls } from 'leva'
 
 
 export default function Experience() {
@@ -18,6 +19,13 @@ export default function Experience() {
         // cube.current.position.x = 2 + Math.sin(time)
         cube.current.rotation.y += delta * 0.2
     })
+
+    const { color, opacity, blur } = useControls('contact shadow', {
+        color: '#000000',
+        opacity: { value: 0.4, min: 0, max: 1 },
+        blur: { value: 2.8, min: 0, max: 10 }
+    }
+    )
 
     return <>
         {/* <SoftShadows   // to make shadow edges soft and blury
@@ -61,7 +69,12 @@ export default function Experience() {
             position={[0, -0.99, 0]}
             scale={10}
             resolution={512}
-            far={5} />
+            far={5}
+            color={color}
+            opacity={opacity}
+            blur={blur}
+            frames={1}
+        />
 
 
         <directionalLight
