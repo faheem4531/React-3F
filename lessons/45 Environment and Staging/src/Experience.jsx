@@ -31,24 +31,33 @@ export default function Experience() {
         sunPosition: { value: [1, 2, 3] }
     })
 
-    const { envMapIntensity } = useControls('environment map', {
-        envMapIntensity: { value: 3.5, min: 0, max: 12 }
+    const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } = useControls('environment map', {
+        envMapIntensity: { value: 3.5, min: 0, max: 12 },
+        envMapHeight: { value: 7, min: 0, max: 100 },
+        envMapRadius: { value: 20, min: 10, max: 1000 },
+        envMapScale: { value: 100, min: 10, max: 1000 },
     })
 
     return <>
         <Environment
-            // background
+            background
             preset='sunset'
+            ground={{
+                height: envMapHeight,
+                radius: envMapRadius,
+                scale: envMapScale
+
+            }}
         >
             {/* <color args={['#000000']} attach={"background"} /> */}
 
-            <Lightformer
+            {/* <Lightformer
                 position-z={-5}
                 scale={10}
                 color="red"
                 intensity={10}
                 form="ring"
-            />
+            /> */}
             {/* <mesh position-z={-5} scale={10}>
                 <planeGeometry />
                 <meshBasicMaterial color={[10, 0, 0]} />
@@ -145,20 +154,20 @@ export default function Experience() {
 
         {/* <Sky sunPosition={sunPosition} /> */}
 
-        <mesh castShadow position-x={- 2}>
+        <mesh position-y={1} castShadow position-x={- 2}>
             <sphereGeometry />
             <meshStandardMaterial color="orange" envMapIntensity={envMapIntensity} />
         </mesh>
 
-        <mesh castShadow ref={cube} position-x={2} scale={1.5} >
+        <mesh position-y={1} castShadow ref={cube} position-x={2} scale={1.5} >
             <boxGeometry />
             <meshStandardMaterial color="mediumpurple" envMapIntensity={envMapIntensity} />
         </mesh>
 
-        <mesh position-y={- 1} rotation-x={- Math.PI * 0.5} scale={10}>
+        {/* <mesh position-y={-0} rotation-x={- Math.PI * 0.5} scale={10}>
             <planeGeometry />
             <meshStandardMaterial color="greenyellow" envMapIntensity={envMapIntensity} />
-        </mesh>
+        </mesh> */}
 
     </>
 }
