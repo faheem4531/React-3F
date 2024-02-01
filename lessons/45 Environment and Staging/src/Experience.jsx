@@ -1,8 +1,9 @@
 import { useFrame } from '@react-three/fiber'
-import { BakeShadows, OrbitControls, useHelper } from '@react-three/drei'
+import { BakeShadows, OrbitControls, SoftShadows, useHelper } from '@react-three/drei'
 import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
+
 
 export default function Experience() {
 
@@ -16,7 +17,15 @@ export default function Experience() {
     })
 
     return <>
-        <BakeShadows />
+        <SoftShadows   // to make shadow edges soft and blury
+        // frustum={3.75}
+        // size={0.005}
+        // near={9.5}
+        // samples={17}
+        // rings={11}
+        />
+
+        {/* <BakeShadows /> */}
 
         <color args={['black']} attach={"background"} />
 
@@ -31,7 +40,7 @@ export default function Experience() {
             castShadow
             shadow-mapSize={[1024, 1024]}
             shadow-camera-near={1}
-            shadow-camera-far={1}
+            shadow-camera-far={10}
             shadow-camera-top={5}
             shadow-camera-right={5}
             shadow-camera-bottom={-5}
