@@ -1,6 +1,8 @@
 import { OrbitControls } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 import Model from './Model'
+import { Suspense } from 'react'
+import PlaceHolder from './PlaceHolder'
 
 export default function Experience() {
 
@@ -17,6 +19,9 @@ export default function Experience() {
             <planeGeometry />
             <meshStandardMaterial color="greenyellow" />
         </mesh>
-        <Model />
+
+        <Suspense fallback={<PlaceHolder />}>
+            <Model />
+        </Suspense>
     </>
 }
