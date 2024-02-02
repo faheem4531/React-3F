@@ -21,7 +21,7 @@ export default function Experience() {
         </mesh>
 
         <Suspense fallback={<PlaceHolder />}>
-            <Model />
+            <Model position-y={0.5} scale={[2, 3, 2]} />
         </Suspense>
     </>
 }
