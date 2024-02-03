@@ -1,7 +1,12 @@
-import { Center, OrbitControls, Text3D } from '@react-three/drei'
+import { Center, OrbitControls, Text3D, useMatcapTexture } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
 
+
 export default function Experience() {
+
+    // https://github.com/nidorx/matcaps/blob/master/PAGE-17.md
+    const [matcapTexture] = useMatcapTexture('7B5254_E9DCC7_B19986_C8AC91', 256)
+
     return <>
 
         <Perf position="top-left" />
@@ -21,7 +26,7 @@ export default function Experience() {
                 bevelSegments={5}
             >
                 HELLO R3F
-                <meshNormalMaterial />
+                <meshMatcapMaterial matcap={matcapTexture} />
             </Text3D>
         </Center>
 
