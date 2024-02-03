@@ -3,6 +3,7 @@ import { Perf } from 'r3f-perf'
 import Model from './Model'
 import { Suspense } from 'react'
 import PlaceHolder from './PlaceHolder'
+import Fox from './Fox'
 
 export default function Experience() {
 
@@ -22,6 +23,7 @@ export default function Experience() {
 
         <Suspense fallback={<PlaceHolder />}>
             <Model position-y={0.5} scale={[2, 3, 2]} />
+            <Fox />
         </Suspense>
     </>
 }
