@@ -15,5 +15,27 @@ export default function Experience() {
         <mesh geometry={nodes.baked.geometry} >
             <meshBasicMaterial map={bakedTexture} />
         </mesh>
+
+        <mesh
+            geometry={nodes.poleLightA.geometry}
+            position={nodes.poleLightA.position}
+        >
+            <meshBasicMaterial color="#ffffe5" />
+        </mesh>
+
+        <mesh
+            geometry={nodes.poleLightB.geometry}
+            position={nodes.poleLightB.position}
+        >
+            <meshBasicMaterial color="#ffffe5" />
+        </mesh>
+
+        <mesh
+            geometry={nodes.portalLight.geometry}
+            position={nodes.portalLight.position}
+            rotation={nodes.portalLight.rotation}
+
+        >
+        </mesh>
     </>
 }
