@@ -23,6 +23,12 @@ export default function Experience() {
     const bakedTexture = useTexture('./model/baked.jpg')
     bakedTexture.flipY = false
 
+    const portalMaterial = useRef()
+
+    useFrame((state, delta) => {
+        portalMaterial.current.uTime += delta
+    })
+
     return <>
 
         <color args={['#030202']} attach="background" />
@@ -53,7 +59,7 @@ export default function Experience() {
                 position={nodes.portalLight.position}
                 rotation={nodes.portalLight.rotation}
             >
-                <portalMaterial />
+                <portalMaterial ref={portalMaterial} />
             </mesh>
 
             <Sparkles
