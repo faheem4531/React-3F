@@ -1,6 +1,10 @@
 import { Center, OrbitControls, Text3D, useMatcapTexture } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
+import { useEffect } from 'react'
+import * as THREE from 'three'
 
+const torusGeometry = new THREE.TorusGeometry(1, 0.6, 16, 32)
+const material = new THREE.MeshMatcapMaterial()
 
 export default function Experience() {
 
@@ -9,7 +13,14 @@ export default function Experience() {
     const [matcapTextureX] = useMatcapTexture('7E5344_22120E_CCAB9C_8D919D', 256)
 
 
-    // const tempArray = [...Array[100]]
+    useEffect(() => {
+
+        matcapTexture.encoding = THREE.sRGBEncoding
+        matcapTexture.needsUpdate = true
+
+        material.matcap = matcapTexture
+        material.needsUpdate = true
+    }, [])
 
     return <>
 
@@ -37,6 +48,8 @@ export default function Experience() {
         {[...Array(100)].map((value, index) =>
             <mesh
                 key={index}
+                geometry={torusGeometry}
+                material={material}
                 position={[
                     (Math.random() - 0.5) * 10,
                     (Math.random() - 0.5) * 10,
@@ -48,10 +61,7 @@ export default function Experience() {
                     Math.random() * Math.PI,
                     0
                 ]}
-            >
-                <torusGeometry args={[1, 0.6, 16, 32]} />
-                <meshMatcapMaterial matcap={matcapTextureX} />
-            </mesh>
+            />
         )}
 
     </>
