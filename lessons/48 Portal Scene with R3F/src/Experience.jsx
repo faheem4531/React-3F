@@ -1,4 +1,21 @@
-import { Center, OrbitControls, Sparkles, useGLTF, useTexture } from '@react-three/drei'
+import { shaderMaterial, Sparkles, Center, useTexture, useGLTF, OrbitControls } from '@react-three/drei'
+import * as THREE from 'three'
+import { useFrame, extend } from '@react-three/fiber'
+import { useRef } from 'react'
+import portalVertexShader from './shaders/portal/vertex.glsl'
+import portalFragmentShader from './shaders/portal/fragment.glsl'
+
+const PortalMaterial = shaderMaterial(
+    {
+        uTime: 0,
+        uColorStart: new THREE.Color('#ffffff'),
+        uColorEnd: new THREE.Color('#000000')
+    },
+    portalVertexShader,
+    portalFragmentShader
+)
+
+extend({ PortalMaterial })
 
 export default function Experience() {
 
@@ -35,9 +52,10 @@ export default function Experience() {
                 geometry={nodes.portalLight.geometry}
                 position={nodes.portalLight.position}
                 rotation={nodes.portalLight.rotation}
-
             >
+                <portalMaterial />
             </mesh>
+
             <Sparkles
                 size={6}
                 scale={[4, 2, 4]}
