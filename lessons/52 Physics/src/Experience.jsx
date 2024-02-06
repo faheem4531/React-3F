@@ -35,7 +35,12 @@ export default function Experience() {
                 </mesh>
             </RigidBody>
 
-            <RigidBody ref={cube} position={[1.5, 2, 0]} gravityScale={1}>
+            <RigidBody
+                ref={cube}
+                position={[1.5, 2, 0]}
+                gravityScale={1}
+                restitution={1}
+            >
                 <mesh castShadow onClick={cubeJump}>
                     <boxGeometry />
                     <meshStandardMaterial color="mediumpurple" />
