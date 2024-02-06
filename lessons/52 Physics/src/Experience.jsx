@@ -1,7 +1,10 @@
 import { OrbitControls } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { CuboidCollider, Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
 import { useRef } from 'react'
+import * as THREE from "three"
+
 
 export default function Experience() {
 
@@ -17,6 +20,23 @@ export default function Experience() {
             z: Math.random() - 0.5
         })
     }
+
+    useFrame((state) => {
+
+        const time = state.clock.getElapsedTime()
+
+        const eulerRotation = new THREE.Euler(0, time * 3, 0)
+        const quaternionRotation = new THREE.Quaternion()
+        quaternionRotation.setFromEuler(eulerRotation)
+        twister.current.setNextKinematicRotation(quaternionRotation)
+
+        const angle = time * 0.5
+        const x = Math.cos(angle) * 2
+        const z = Math.sin(angle) * 2
+        twister.current.setNextKinematicTranslation({ x: x, y: - 0.8, z: z })
+
+    })
+
     return <>
 
         <Perf position="top-left" />
