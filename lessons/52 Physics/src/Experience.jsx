@@ -2,7 +2,7 @@ import { OrbitControls, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { CuboidCollider, CylinderCollider, Debug, InstancedRigidBodies, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from "three"
 
 
@@ -47,7 +47,32 @@ export default function Experience() {
 
     const hamburger = useGLTF('./hamburger.glb')
 
-    const cubesCount = 10
+    const cubesCount = 100
+
+    const cubesTransform = useMemo(() => {
+
+        const positions = []
+        const rotations = []
+        const scales = []
+
+        for (let i = 0; i < cubesCount; i++) {
+
+            positions.push([
+                (Math.random() - 0.5) * 8,
+                6 + i * 0.2,
+                (Math.random() - 0.5) * 8
+            ])
+            rotations.push([
+                Math.random(),
+                Math.random(),
+                Math.random()
+            ])
+            const scale = 0.2 + Math.random() * 0.8
+            scales.push([scale, scale, scale])
+        }
+
+        return { positions, rotations, scales }
+    }, [])
 
     //replaces bt <InstancedRigidBodies>
     // useEffect(() => {    
@@ -73,7 +98,7 @@ export default function Experience() {
 
         <Physics gravity={[0, -9.81, 0]}>
 
-            <Debug />
+            {/* <Debug /> */}
             {/* colliders = ball / trimesh / hull */}
 
             <RigidBody colliders="ball" position={[- 1.5, 2, 0]}>
@@ -137,7 +162,11 @@ export default function Experience() {
                 <CuboidCollider args={[0.5, 2, 5]} position={[-5.5, 1, 0]} />
             </RigidBody>
 
-            <InstancedRigidBodies>
+            <InstancedRigidBodies
+                positions={cubesTransform.positions}
+                rotations={cubesTransform.rotations}
+                scales={cubesTransform.scales}
+            >
                 <instancedMesh ref={cubes} castShadow args={[null, null, cubesCount]}>
                     <boxGeometry />
                     <meshStandardMaterial color='tomato' />
