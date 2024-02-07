@@ -1,8 +1,8 @@
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { CuboidCollider, CylinderCollider, Debug, Physics, RigidBody } from '@react-three/rapier'
+import { CuboidCollider, CylinderCollider, Debug, InstancedRigidBodies, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from "three"
 
 
@@ -11,6 +11,7 @@ export default function Experience() {
     const [hitSound] = useState(() => new Audio('./hit.mp3'))
     const twister = useRef()
     const cube = useRef()
+    const cubes = useRef()
 
     const cubeJump = () => {
         const mass = cube.current.mass()
@@ -45,6 +46,21 @@ export default function Experience() {
     }
 
     const hamburger = useGLTF('./hamburger.glb')
+
+    const cubesCount = 10
+
+    //replaces bt <InstancedRigidBodies>
+    // useEffect(() => {    
+    //     for (let i = 0; i < cubesCount; i++) {
+    //         const matrix = new THREE.Matrix4()
+    //         matrix.compose(
+    //             new THREE.Vector3(1 * 2, 0, 0),
+    //             new THREE.Quaternion(),
+    //             new THREE.Vector3(1, 1, 1)
+    //         )
+    //         cubes.current.setMatrixAt(i, matrix)
+    //     }
+    // }, [])
 
     return <>
 
@@ -108,7 +124,7 @@ export default function Experience() {
                 </mesh>
             </RigidBody>
 
-            <RigidBody colliders={false} position={[0, 4, 0]}>
+            <RigidBody colliders={false} castShadow position={[0, 4, 0]}>
                 <primitive object={hamburger.scene} scale={0.25} />
                 <CylinderCollider args={[0.5, 1.25]} />
             </RigidBody>
@@ -120,6 +136,13 @@ export default function Experience() {
                 <CuboidCollider args={[0.5, 2, 5]} position={[5.5, 1, 0]} />
                 <CuboidCollider args={[0.5, 2, 5]} position={[-5.5, 1, 0]} />
             </RigidBody>
+
+            <InstancedRigidBodies>
+                <instancedMesh ref={cubes} castShadow args={[null, null, cubesCount]}>
+                    <boxGeometry />
+                    <meshStandardMaterial color='tomato' />
+                </instancedMesh>
+            </InstancedRigidBodies>
         </Physics >
     </>
 }
