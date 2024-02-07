@@ -74,7 +74,7 @@ export default function Experience() {
                 restitution={0}
                 friction={0.7}
                 colliders={false}
-                onCollisionEnter={collisionEnter}
+            // onCollisionEnter={collisionEnter}
             // onCollisionExit={()=>{console.log("exit")}}
             // onSleep={() => { console.log("sleep") }}
             // onWake={() => { console.log("awake") }}
@@ -111,6 +111,14 @@ export default function Experience() {
             <RigidBody colliders={false} position={[0, 4, 0]}>
                 <primitive object={hamburger.scene} scale={0.25} />
                 <CylinderCollider args={[0.5, 1.25]} />
+            </RigidBody>
+
+            {/* insivisible walls so that none of the object fall from it. */}
+            <RigidBody type='fixed'>
+                <CuboidCollider args={[5, 2, 0.5]} position={[0, 1, 5.5]} />
+                <CuboidCollider args={[5, 2, 0.5]} position={[0, 1, -5.5]} />
+                <CuboidCollider args={[0.5, 2, 5]} position={[5.5, 1, 0]} />
+                <CuboidCollider args={[0.5, 2, 5]} position={[-5.5, 1, 0]} />
             </RigidBody>
         </Physics >
     </>
