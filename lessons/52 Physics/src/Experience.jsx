@@ -1,6 +1,6 @@
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { CuboidCollider, Debug, Physics, RigidBody } from '@react-three/rapier'
+import { CuboidCollider, CylinderCollider, Debug, Physics, RigidBody } from '@react-three/rapier'
 import { Perf } from 'r3f-perf'
 import { useRef, useState } from 'react'
 import * as THREE from "three"
@@ -44,6 +44,8 @@ export default function Experience() {
         hitSound.play()
     }
 
+    const hamburger = useGLTF('./hamburger.glb')
+
     return <>
 
         <Perf position="top-left" />
@@ -73,6 +75,9 @@ export default function Experience() {
                 friction={0.7}
                 colliders={false}
                 onCollisionEnter={collisionEnter}
+            // onCollisionExit={()=>{console.log("exit")}}
+            // onSleep={() => { console.log("sleep") }}
+            // onWake={() => { console.log("awake") }}
             >
                 <mesh castShadow onClick={cubeJump}>
                     <boxGeometry />
@@ -103,7 +108,10 @@ export default function Experience() {
                 </mesh>
             </RigidBody>
 
+            <RigidBody colliders={false} position={[0, 4, 0]}>
+                <primitive object={hamburger.scene} scale={0.25} />
+                <CylinderCollider args={[0.5, 1.25]} />
+            </RigidBody>
         </Physics >
-
     </>
 }
